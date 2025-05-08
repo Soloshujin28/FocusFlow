@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Flow - Boost Your Productivity</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div class="splash-screen">
+        <div class="splash-content">
+            <div class="logo-container">
+                <img src="/assets/logo.png" alt="Focus Flow Logo" class="logo">
+                <h1 class="animate-text">Focus Flow</h1>
+            </div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login/Signup Page -->
+    <div class="auth-container" id="authPage">
+        <div class="auth-form glass-card">
+            <div class="form-toggle">
+                <button class="toggle-btn active" id="loginToggle">Login</button>
+                <button class="toggle-btn" id="signupToggle">Sign Up</button>
+            </div>
+            <div class="logo-container">
+                <img src="/assets/logo.png" alt="Focus Flow Logo" class="logo">
+                <h1>Focus Flow</h1>
+            </div>
+            <form id="loginForm" class="active-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+                <div class="form-footer">
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                </div>
+            </form>
+            <form id="signupForm">
+                <div class="form-group">
+                    <input type="text" placeholder="Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Confirm Password" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div class="app-container hidden" id="appContainer">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <img src="/assets/logo.png" alt="Focus Flow Logo" class="logo" id="homeButton">
+                <h1>Focus Flow</h1>
+            </div>
+            <nav class="navbar">
+                <div class="nav-item dropdown">
+                    <a href="#features" class="nav-link">Features</a>
+                    <div class="dropdown-content">
+                        <a href="#timer">Pomodoro Timer</a>
+                        <a href="#task-management">Task Management</a>
+                        <a href="#progress-tracking">Progress Tracking</a>
+                        <a href="#ambient-sounds">Ambient Sounds</a>
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#about" class="nav-link">About</a>
+                    <div class="dropdown-content">
+                        <a href="#our-mission">Our Mission</a>
+                        <a href="#how-it-works">How it Works</a>
+                        <a href="#testimonials">Testimonials</a>
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#resources" class="nav-link">Resources</a>
+                    <div class="dropdown-content">
+                        <a href="#blog">Blog</a>
+                        <a href="#guides">Guides</a>
+                        <a href="#faq">FAQ</a>
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#contact" class="nav-link">Contact</a>
+                    <div class="dropdown-content">
+                        <a href="#support">Support</a>
+                        <a href="#feedback">Feedback</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="user-controls">
+                <div class="theme-switch-wrapper">
+                    <label class="theme-switch" for="darkModeToggle">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="user-profile dropdown">
+                    <img src="/assets/user profile.png" alt="User Profile" class="user-avatar">
+                    <div class="dropdown-content">
+                        <a href="#profile">View Profile</a>
+                        <a href="#settings">Settings</a>
+                        <a href="#logout" id="logoutButton">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <ul class="sidebar-menu">
+                    <li class="sidebar-item active" data-content="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </li>
+                    <li class="sidebar-item" data-content="timer">
+                        <i class="fas fa-clock"></i>
+                        <span>Pomodoro Timer</span>
+                    </li>
+                    <li class="sidebar-item" data-content="tasks">
+                        <i class="fas fa-tasks"></i>
+                        <span>Tasks</span>
+                    </li>
+                    <li class="sidebar-item" data-content="progress">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Progress</span>
+                    </li>
+                    <li class="sidebar-item" data-content="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="section-header">
+                    <h2>Dashboard</h2>
+                    <p class="date" id="currentDate">Today's Date</p>
+                </div>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card glass-card">
+                        <h3>Today's Focus</h3>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 65%"></div>
+                            </div>
+                            <span class="progress-text">65% of daily goal</span>
+                        </div>
+                        <div class="stats">
+                            <div class="stat-item">
+                                <span class="stat-value">3</span>
+                                <span class="stat-label">Sessions Completed</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">2</span>
+                                <span class="stat-label">Tasks Completed</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card glass-card">
+                        <h3>Quick Start</h3>
+                        <div class="quick-start-options">
+                            <button class="btn btn-accent" id="startFocusSession">Start Focus Session</button>
+                            <button class="btn btn-outline">Add New Task</button>
+                        </div>
+                    </div>
+                    <div class="dashboard-card glass-card">
+                        <h3>Productivity Tip</h3>
+                        <blockquote id="quote">
+                            <p>"Focus on being productive instead of busy."</p>
+                            <cite>- Tim Ferriss</cite>
+                        </blockquote>
+                    </div>
+                    <div class="dashboard-card glass-card">
+                        <h3>Weekly Overview</h3>
+                        <canvas id="weeklyChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Timer Section -->
+            <section id="timer" class="content-section">
+                <div class="section-header">
+                    <h2>Pomodoro Timer</h2>
+                    <button class="btn btn-outline btn-sm" id="exitTimer">
+                        <i class="fas fa-times"></i> Exit
+                    </button>
+                </div>
+                <div class="timer-container glass-card">
+                    <div class="timer-modes">
+                        <button class="timer-mode-btn active" data-mode="focus">Focus Time</button>
+                        <button class="timer-mode-btn" data-mode="break">Short Break</button>
+                        <button class="timer-mode-btn" data-mode="longBreak">Long Break</button>
+                    </div>
+                    <div class="timer-display">
+                        <div class="timer-circle">
+                            <div class="timer-time" id="timerDisplay">25:00</div>
+                        </div>
+                    </div>
+                    <div class="timer-controls">
+                        <button class="btn btn-primary" id="startTimer">Start</button>
+                        <button class="btn btn-outline" id="pauseTimer" disabled>Pause</button>
+                        <button class="btn btn-outline" id="resetTimer" disabled>Reset</button>
+                    </div>
+                    <div class="timer-settings">
+                        <div class="setting-item">
+                            <label for="focusTime">Focus Time (minutes)</label>
+                            <input type="number" id="focusTime" min="1" max="120" value="25">
+                        </div>
+                        <div class="setting-item">
+                            <label for="breakTime">Short Break (minutes)</label>
+                            <input type="number" id="breakTime" min="1" max="30" value="5">
+                        </div>
+                        <div class="setting-item">
+                            <label for="longBreakTime">Long Break (minutes)</label>
+                            <input type="number" id="longBreakTime" min="1" max="60" value="15">
+                        </div>
+                    </div>
+                </div>
+                <div class="current-task glass-card">
+                    <h3>Current Task</h3>
+                    <div class="task-select">
+                        <select id="taskSelect">
+                            <option value="">Select a task...</option>
+                        </select>
+                    </div>
+                    <div class="task-progress">
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 0%"></div>
+                        </div>
+                        <span class="progress-text">0% Complete</span>
+                    </div>
+                </div>
+                <div id="breakSuggestion" class="glass-card hidden">
+                    <h3>Break Suggestion</h3>
+                    <p id="breakActivity">Take a quick walk to refresh your mind.</p>
+                </div>
+            </section>
+
+            <!-- Tasks Section -->
+            <section id="tasks" class="content-section">
+                <div class="section-header">
+                    <h2>Task Management</h2>
+                    <button class="btn btn-primary" id="addTaskBtn">
+                        <i class="fas fa-plus"></i> Add Task
+                    </button>
+                </div>
+                <div class="task-list-container glass-card">
+                    <div class="task-filter">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="today">Today</button>
+                        <button class="filter-btn" data-filter="upcoming">Upcoming</button>
+                        <button class="filter-btn" data-filter="completed">Completed</button>
+                    </div>
+                    <ul class="task-list" id="taskList">
+                        <!-- Tasks will be inserted here -->
+                    </ul>
+                </div>
+                <div id="taskFormModal" class="modal">
+                    <div class="modal-content glass-card">
+                        <span class="close-modal">&times;</span>
+                        <h3>Add New Task</h3>
+                        <form id="taskForm">
+                            <div class="form-group">
+                                <label for="taskTitle">Task Title</label>
+                                <input type="text" id="taskTitle" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="taskDescription">Description</label>
+                                <textarea id="taskDescription" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="taskDate">Due Date</label>
+                                <input type="date" id="taskDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="taskPriority">Priority</label>
+                                <select id="taskPriority">
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="taskPomodoros">Estimated Pomodoros</label>
+                                <input type="number" id="taskPomodoros" min="1" max="10" value="1">
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Save Task</button>
+                                <button type="button" class="btn btn-outline" id="cancelTaskBtn">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Progress Section -->
+            <section id="progress" class="content-section">
+                <div class="section-header">
+                    <h2>Progress Tracking</h2>
+                    <div class="time-filter">
+                        <button class="filter-btn active" data-time="week">Week</button>
+                        <button class="filter-btn" data-time="month">Month</button>
+                        <button class="filter-btn" data-time="year">Year</button>
+                    </div>
+                </div>
+                <div class="progress-stats">
+                    <div class="stat-card glass-card">
+                        <h3>Focus Sessions</h3>
+                        <div class="stat-value" id="focusSessionCount">24</div>
+                        <div class="stat-label">Total Sessions</div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <h3>Focus Time</h3>
+                        <div class="stat-value" id="totalFocusTime">12h 30m</div>
+                        <div class="stat-label">Total Time</div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <h3>Tasks Completed</h3>
+                        <div class="stat-value" id="tasksCompleted">18</div>
+                        <div class="stat-label">Completed Tasks</div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <h3>Productivity Score</h3>
+                        <div class="stat-value" id="productivityScore">85%</div>
+                        <div class="stat-label">Efficiency</div>
+                    </div>
+                </div>
+                <div class="chart-container glass-card">
+                    <h3>Focus Distribution</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="focusDistribution"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container glass-card">
+                    <h3>Daily Progress</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="dailyProgress"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="content-section">
+                <div class="section-header">
+                    <h2>Settings</h2>
+                </div>
+                <div class="settings-container">
+                    <div class="settings-card glass-card">
+                        <h3>Timer Settings</h3>
+                        <div class="setting-item">
+                            <label for="defaultFocusTime">Default Focus Time (minutes)</label>
+                            <input type="number" id="defaultFocusTime" min="1" max="120" value="25">
+                        </div>
+                        <div class="setting-item">
+                            <label for="defaultBreakTime">Default Short Break (minutes)</label>
+                            <input type="number" id="defaultBreakTime" min="1" max="30" value="5">
+                        </div>
+                        <div class="setting-item">
+                            <label for="defaultLongBreakTime">Default Long Break (minutes)</label>
+                            <input type="number" id="defaultLongBreakTime" min="1" max="60" value="15">
+                        </div>
+                        <div class="setting-item checkbox">
+                            <input type="checkbox" id="autoStartBreaks">
+                            <label for="autoStartBreaks">Auto-start breaks</label>
+                        </div>
+                        <div class="setting-item checkbox">
+                            <input type="checkbox" id="autoStartPomodoros">
+                            <label for="autoStartPomodoros">Auto-start pomodoros</label>
+                        </div>
+                    </div>
+                    <div class="settings-card glass-card">
+                        <h3>Notification Settings</h3>
+                        <div class="setting-item checkbox">
+                            <input type="checkbox" id="enableNotifications" checked>
+                            <label for="enableNotifications">Enable notifications</label>
+                        </div>
+                        <div class="setting-item checkbox">
+                            <input type="checkbox" id="enableSounds" checked>
+                            <label for="enableSounds">Enable sounds</label>
+                        </div>
+                        <div class="setting-item">
+                            <label for="notificationSound">Notification Sound</label>
+                            <select id="notificationSound">
+                                <option value="bell">Bell</option>
+                                <option value="chime">Chime</option>
+                                <option value="digital">Digital</option>
+                                <option value="gentle">Gentle</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="settings-card glass-card">
+                        <h3>Appearance</h3>
+                        <div class="setting-item checkbox">
+                            <input type="checkbox" id="darkMode">
+                            <label for="darkMode">Dark Mode</label>
+                        </div>
+                        <div class="setting-item">
+                            <label for="accentColor">Accent Color</label>
+                            <input type="color" id="accentColor" value="#ff9a56">
+                        </div>
+                        <div class="setting-item">
+                            <label for="fontSize">Font Size</label>
+                            <select id="fontSize">
+                                <option value="small">Small</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="large">Large</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="settings-card glass-card">
+                        <h3>Ambient Sounds</h3>
+                        <div class="setting-item checkbox">
+                            <input type="checkbox" id="enableAmbientSounds">
+                            <label for="enableAmbientSounds">Enable ambient sounds</label>
+                        </div>
+                        <div class="setting-item">
+                            <label for="ambientSound">Sound Type</label>
+                            <select id="ambientSound">
+                                <option value="rainforest">Rainforest</option>
+                                <option value="ocean">Ocean Waves</option>
+                                <option value="whiteNoise">White Noise</option>
+                                <option value="cafe">Cafe Ambience</option>
+                                <option value="fireplace">Fireplace</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label for="ambientVolume">Volume</label>
+                            <input type="range" id="ambientVolume" min="0" max="100" value="50">
+                        </div>
+                    </div>
+                    <div class="settings-actions">
+                        <button class="btn btn-primary" id="saveSettingsBtn">Save Settings</button>
+                        <button class="btn btn-outline" id="resetSettingsBtn">Reset to Default</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Home Page Content -->
+        <div id="homePage" class="home-page hidden">
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h1 class="animate-text">Focus Flow</h1>
+                    <p class="hero-subtitle animate-text">Boost your productivity with our powerful Pomodoro technique app</p>
+                    <div class="hero-buttons animate-text">
+                        <button class="btn btn-primary" id="getStartedBtn">Get Started</button>
+                        <button class="btn btn-outline">Learn More</button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="/api/placeholder/500/350" alt="Focus Flow App Preview" class="animate-image">
+                </div>
+            </section>
+
+            <section id="features" class="features-section">
+                <div class="section-header">
+                    <h2>Features</h2>
+                    <p>Everything you need to enhance your focus and productivity</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card" id="timer-feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Pomodoro Timer</h3>
+                        <p>Customize your focus sessions with flexible time settings to match your workflow</p>
+                    </div>
+                    <div class="feature-card" id="task-management">
+                        <div class="feature-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h3>Task Management</h3>
+                        <p>Create, organize, and prioritize your tasks to stay on top of your responsibilities</p>
+                    </div>
+                    <div class="feature-card" id="progress-tracking">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Progress Tracking</h3>
+                        <p>Visualize your productivity with detailed analytics and progress charts</p>
+                    </div>
+                    <div class="feature-card" id="ambient-sounds">
+                        <div class="feature-icon">
+                            <i class="fas fa-volume-up"></i>
+                        </div>
+                        <h3>Ambient Sounds</h3>
+                        <p>Enhance your focus with a variety of calming background sounds</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="about-section">
+                <div class="section-header">
+                    <h2>About Focus Flow</h2>
+                </div>
+                <div class="about-container">
+                    <div id="our-mission" class="about-card glass-card">
+                        <h3>Our Mission</h3>
+                        <p>At Focus Flow, we believe that productivity shouldn't come at the expense of well-being. Our mission is to help people work smarter, not harder, by providing tools that promote focus, balance, and sustainable productivity.</p>
+                    </div>
+                    <div id="how-it-works" class="about-card glass-card">
+                        <h3>How It Works</h3>
+                        <p>Focus Flow uses the proven Pomodoro Technique, a time management method that breaks work into intervals, traditionally 25 minutes in length, separated by short breaks. This technique has been shown to improve focus, reduce burnout, and enhance productivity.</p>
+                    </div>
+                    <div id="testimonials" class="about-card glass-card">
+                        <h3>Testimonials</h3>
+                        <div class="testimonial">
+                            <p>"Focus Flow has transformed how I work. I'm more productive and less stressed."</p>
+                            <div class="testimonial-author">- Sarah J.</div>
+                        </div>
+                        <div class="testimonial">
+                            <p>"The progress tracking feature keeps me motivated. I can see my productivity improving each week."</p>
+                            <div class="testimonial-author">- Michael T.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="resources" class="resources-section">
+                <div class="section-header">
+                    <h2>Resources</h2>
+                </div>
+                <div class="resources-container">
+                    <div id="blog" class="resource-card glass-card">
+                        <h3>Blog</h3>
+                        <div class="blog-post">
+                            <h4>Mastering the Pomodoro Technique</h4>
+                            <p>Learn how to maximize your productivity with this time-tested method...</p>
+                            <a href="#" class="read-more">Read More</a>
+                        </div>
+                        <div class="blog-post">
+                            <h4>5 Ways to Improve Your Focus</h4>
+                            <p>Practical tips to enhance your concentration in a distracted world...</p>
+                            <a href="#" class="read-more">Read More</a>
+                        </div>
+                    </div>
+                    <div id="guides" class="resource-card glass-card">
+                        <h3>Guides</h3>
+                        <ul class="guides-list">
+                            <li><a href="#">Beginner's Guide to Focus Flow</a></li>
+                            <li><a href="#">Setting Effective Goals</a></li>
+                            <li><a href="#">Time Management Strategies</a></li>
+                            <li><a href="#">Creating a Productive Workspace</a></li>
+                        </ul>
+                    </div>
+                    <div id="faq" class="resource-card glass-card">
+                        <h3>FAQ</h3>
+                        <div class="faq-item">
+                            <div class="faq-question">What is the Pomodoro Technique?</div>
+                            <div class="faq-answer">The Pomodoro Technique is a time management method that uses a timer to break work into intervals, traditionally 25 minutes in length, separated by short breaks.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">How do I track my progress?</div>
+                            <div class="faq-answer">Focus Flow automatically tracks your completed sessions and tasks, displaying your progress in easy-to-understand charts and statistics.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact" class="contact-section">
+                <div class="section-header">
+                    <h2>Contact Us</h2>
+                </div>
+                <div class="contact-container">
+                    <div id="support" class="contact-card glass-card">
+                        <h3>Support</h3>
+                        <p>Need help with Focus Flow? Our support team is here to assist you.</p>
+                        <a href="mailto:support@focusflow.com" class="btn btn-outline">Email Support</a>
+                    </div>
+                    <div id="feedback" class="contact-card glass-card">
+                        <h3>Feedback</h3>
+                        <p>We're always looking to improve. Share your thoughts and suggestions with us.</p>
+                        <form id="feedbackForm">
+                            <div class="form-group">
+                                <input type="text" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" placeholder="Your Email" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea placeholder="Your Feedback" rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Send Feedback</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <img src="/assets/logo.png" alt="Focus Flow Logo" class="logo">
+                        <h3>Focus Flow</h3>
+                    </div>
+                    <div class="footer-links">
+                        <div class="footer-column">
+                            <h4>Product</h4>
+                            <ul>
+                                <li><a href="#">Features</a></li>
+                                <li><a href="#">Pricing</a></li>
+                                <li><a href="#">Download</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-column">
+                            <h4>Company</h4>
+                            <ul>
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">Careers</a></li>
+                                <li><a href="#">Press</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-column">
+                            <h4>Resources</h4>
+                            <ul>
+                                <li><a href="#">Blog</a></li>
+                                <li><a href="#">Help Center</a></li>
+                                <li><a href="#">Community</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-column">
+                            <h4>Legal</h4>
+                            <ul>
+                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="#">Terms of Service</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="footer-social">
+                        <h4>Connect With Us</h4>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 Focus Flow. All rights reserved.</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
